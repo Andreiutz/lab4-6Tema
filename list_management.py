@@ -1,4 +1,4 @@
-from complex_number import ComplexNumber, modul_numar_complex
+from complex_number import ComplexNumber, suma, modul_numar_complex
 from validation import validare_interval
 
 
@@ -66,3 +66,19 @@ def cautare_numere(list, stanga, dreapta, proprietate):
         if (proprietate(complex_num)): rezultat.append(complex_num)
     return rezultat
 
+def calcul_numere_interval(list, stanga, dreapta, calcul):
+    '''
+        Functia se foloseste de functia 'calcul' pentru a calcula
+        un rezultat din intervalul ['stanga', 'dreapta']
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+               stanga - numar intreg pozitiv, capatul stang al intervalului
+               dreapta - numar intreg pozitiv, capatul drept al intervalului
+               calcul - functie de calcul
+    '''
+    validare_interval(list, stanga, dreapta)
+    rez = list[stanga]
+    for number in list[stanga+1:dreapta+1]:
+        rez = calcul(rez, number)
+    return rez
+    

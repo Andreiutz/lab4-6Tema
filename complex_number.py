@@ -49,3 +49,34 @@ def egale(number1, number2):
     if abs(number1.get_real() - number2.get_real()) > 0.0001: return False
     if abs(number1.get_imaginar() - number2.get_imaginar()) > 0.0001: return False
     return True
+
+
+def suma(number1, number2):
+    '''
+        Functia calculeaza suma dintre numerele complexe 'number1' si 'number2'
+
+        input: number1 - numar complex de forma a+bi, a, b numere reale
+               number2 - numar complex de forma a+bi, a, b numere reale
+        output: suma celor doua numere complexe 'number1' si 'number2'
+    '''
+    real = number1.get_real() + number2.get_real()
+    imaginar = number1.get_imaginar() + number2.get_imaginar()
+    return ComplexNumber(real, imaginar)
+    
+def produs(number1, number2):
+    '''
+        Functia calculeaza produsul dintre numerele complexe 'number1' si
+        'number2'
+
+        input: number1 - numar complex de forma a+bi, a, b numere reale
+               number2 - numar complex de forma a+bi, a, b numere reale
+        output: produsul celor doua numere complexe 'number1' si 'number2'
+    '''
+    n1Real = number1.get_real()
+    n1Imaginar = number1.get_imaginar()
+    n2Real = number2.get_real()
+    n2Imaginar = number2.get_imaginar()
+    
+    real = n1Real * n2Real - n1Imaginar*n2Imaginar
+    imaginar = n1Real * n2Imaginar + n2Real * n1Imaginar
+    return ComplexNumber(real, imaginar)

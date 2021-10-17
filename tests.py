@@ -1,5 +1,5 @@
-from complex_number import ComplexNumber, modul_numar_complex, egale
-from list_management import  proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10
+from complex_number import ComplexNumber,produs,suma, modul_numar_complex, egale
+from list_management import calcul_numere_interval, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10
 from validation import validare_interval
 from service import srv_adauga_numar, srv_cauta_numere
 
@@ -122,6 +122,34 @@ def test_srv_cauta_numere():
     assert(srv_cauta_numere(list, 0, len(list)-1, "modul = 10") == [n1, n2])
     assert(srv_cauta_numere(list, 0, 2, "parte imaginara") == [n0, n1, n2])
 
+def test_suma():
+    nr1 = ComplexNumber(5, 6)
+    nr2 = ComplexNumber(3, 1)
+    sum = suma(nr1, nr2)
+    assert(sum.get_real() == 8)
+    assert(sum.get_imaginar() == 7)
+
+def test_produs():
+    nr1 = ComplexNumber(5, 6)
+    nr2 = ComplexNumber(3, 1)
+    prod = produs(nr1, nr2)
+    assert(prod.get_real() == 9)
+    assert(prod.get_imaginar() == 23)
+
+def test_calcul_numere_interval():
+    n0 = ComplexNumber(1, 2)
+    n1 = ComplexNumber(3, 2)
+    n2 = ComplexNumber(1, 1)
+
+    list = [n0, n1, n2]
+
+    assert(egale(calcul_numere_interval(list, 0, 2, suma), ComplexNumber(5, 5)))
+    assert(egale(calcul_numere_interval(list, 0, 1, produs), ComplexNumber(-1, 8)))
+    try:
+        calcul_numere_interval(list, -1, -2, suma)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "capat stanga invalid!\ncapat dreapta invalid!\n")
 
 def run_tests():
     '''
@@ -136,5 +164,6 @@ def run_tests():
     test_cautare_numere()
     test_srv_adauga_numar()
     test_srv_cauta_numere()
-    
-
+    test_suma()
+    test_produs()
+    test_calcul_numere_interval()
