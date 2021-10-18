@@ -1,5 +1,5 @@
-from complex_number import ComplexNumber
-from list_management import proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere
+from complex_number import ComplexNumber, suma, produs
+from list_management import calcul_numere_interval, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere
 from validation import validare_interval
 
 def srv_adauga_numar(list, number, poz):
@@ -26,12 +26,39 @@ def srv_cauta_numere(list, stanga, dreapta, proprietate):
         output: rezultat - sirul numerelor cu proprietatea ceruta din intervalul ['stanga','dreapta']
                 raises: Exception "capat stanga invalid!\n" si/sau "capat dreapta invalid!\n" daca indicii intervalului
                         nu sunt valizi
+                        Exception "cerinta invalida!\n" daca proprietatea 'proprietate' primita din ui este invalida
     '''
     if proprietate == "parte imaginara":
         prp = proprietate_parte_imaginara
-    if proprietate == "modul < 10":
+    elif proprietate == "modul < 10":
         prp = proprietate_modul_mai_mic_10
-    if proprietate == "modul = 10":
+    elif proprietate == "modul = 10":
         prp = proprietate_modul_egal_10
+    else: raise Exception("cerinta invalida!\n")
     secventa = cautare_numere(list, stanga, dreapta, prp)
     return secventa
+
+def srv_calcul_numere_interval(list, stanga, dreapta, calcul):
+    '''
+        Comunicare dintre ui si program. Functia primeste 2 indici, 'stanga' si 'dreapta'
+        Valideaza acesti indici si executa operatiile corespunzatoare pe intervalul 
+        ['stanga', 'dreapta']
+
+        input: list - sir de numere complexe de forma a+bi, a, b reale
+               stanga - indicele stang al intervalului
+               dreapta - indicele drept al intervalului
+               calcul - operatia care trebuie aplicata sirului. Poate fi 'suma'/'produs'
+        output: rezultat - numar complex de forma a+bi, a, b reale
+                raises Exception: "capat stanga invalid!\n" si/sau "capat dreapta invalid!\n" daca indicii intervalului
+                                    nu sunt valizi
+                                  "formula invalida!\n" daca parametrul 'calcul' nu are valoarea 'suma'
+                                    sau 'produs'
+    '''
+    if calcul == "suma":
+        clc = suma
+    elif calcul == "produs":
+        clc = produs
+    else:
+        raise Exception("formula invalida!\n")
+    rezultat = calcul_numere_interval(list, stanga, dreapta, clc)
+    return rezultat

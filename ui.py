@@ -3,6 +3,7 @@ import service
 
 
 def ui_optiuni_meniu_principal():
+    print("")
     print("---Meniu Principal---")
     print("1) 'adauga_numar'    - pentru adaugarea unui numar nou")
     print("2) 'modifica_lista'  - pentru modificarea listei de elemente")
@@ -12,12 +13,14 @@ def ui_optiuni_meniu_principal():
     print("6) 'undo'            - pentru refacerea ultima operatie")
     print("7) 'afisare_lista'   - pentru afisarea listei")
     print("8) 'exit'            - pentru iesire program")
+    print("")
 
 def ui_optiuni_adauga(): #1
     #afisare in meniu
+    print("")
     print("1) 'pozitie' - pentru adaugarea numarului la o pozitie data")
     print("2) 'capat'   - pentru adaugarea numarului la capatul listei")
-    
+    print("")
 
 def ui_optiuni_modificare(): #2
     #afisare in meniu
@@ -25,14 +28,19 @@ def ui_optiuni_modificare(): #2
 
 def ui_optiuni_cautare(): #3
     #afisare in meniu
+    print("")
     print("1) 'parte_imaginara  -  pentru afisarea partii imaginare a tuturor numerelor din lista'")
     print("2) 'modul_m10'       - pentru afisarea numerelor cu modului < 10")
     print("3) 'modul_10         - pentru afisarea numerelor cu modului = 10")
-    
+    print("")
 
 def ui_optiuni_operatii(): #4
     #afisare in meniu
-    pass
+    print("")
+    print("1) 'suma'        - pentru calcularea sumei dintr-un interval")
+    print("2) 'produs'      - pentru calcularea produsului dintr-un interval")
+    print("3) 'sort_desc_im'- pentru afisarea listei ordonata desc. dupa partea imaginara")
+    print("")
 
 def ui_optiuni_filtrare(): #5
     #afisare in meniu
@@ -41,6 +49,18 @@ def ui_optiuni_filtrare(): #5
 def ui_optiuni_undo(): #6
     #afisare in meniu
     pass
+
+def ui_citire_indici():
+    try:
+        stanga = int(input("capat stanga: "))
+    except ValueError:
+        raise Exception("indice invalid!")
+    try: 
+        dreapta = int(input("capat dreapta: "))
+    except ValueError:
+        raise Exception("indice invalid!")
+    l = [stanga, dreapta]
+    return l
 
 def ui_adauga_numar(list):
     try:
@@ -94,15 +114,10 @@ def ui_cautare_numere(list):
     cmd = input(">>>")
     if cmd == "parte_imaginara":
         try:
-            stanga = int(input("capat stanga: "))
-        except ValueError:
-            print("indice invalid!")
-            return
-        try: 
-            dreapta = int(input("capat dreapta: "))
-        except ValueError:
-            print("indice invalid!")
-            return 
+            stanga, dreapta = ui_citire_indici()
+        except Exception as ex:
+            print(ex)
+            return  
         try:
             secventa = service.srv_cauta_numere(list, stanga, dreapta, "parte imaginara")
         except Exception as ex:
@@ -116,6 +131,36 @@ def ui_cautare_numere(list):
         secventa = service.srv_cauta_numere(list, 0, len(list)-1, "modul = 10")
         ui_afisare_lista(secventa)
 
+def ui_operatii_lista(list):
+    ui_optiuni_operatii()
+    cmd = input(">>>")
+    if cmd == "suma":
+        try:
+            stanga, dreapta = ui_citire_indici()
+        except Exception as ex:
+            print(ex)
+            return
+        try:    
+            suma = service.srv_calcul_numere_interval(list, stanga, dreapta, "suma")
+        except Exception as ex:
+            print(ex)
+            return
+        print("Suma = " + suma.to_string())
+    if cmd == "produs":
+        try:
+            stanga, dreapta = ui_citire_indici()
+        except Exception as ex:
+            print(ex)
+            return
+        try:
+            produs = service.srv_calcul_numere_interval(list, stanga, dreapta, "produs")
+        except Exception as ex:
+            print(ex)
+            return
+        print("Produsul = " + produs.to_string())  
+    if cmd == "sort_desc_im":
+        pass
+
 
 
 def run():
@@ -125,13 +170,15 @@ def run():
         cmd = input(">>>")
         if cmd == "adauga_numar":
             try:
-                ui_adauga_numar(list)
+                ui_adauga_numar(list) #1. Adauga numar in lista
             except Exception as ex:
                 print(ex)
         if cmd == "afisare_lista":
             ui_afisare_lista(list)
-        if cmd == "cautare_numere":
+        if cmd == "cautare_numere":     #3. Cautare numere
             ui_cautare_numere(list)
+        if cmd == "operatii_lista":
+            ui_operatii_lista(list)
         if cmd == "exit":
             return
         

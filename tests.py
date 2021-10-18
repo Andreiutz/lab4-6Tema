@@ -1,7 +1,7 @@
 from complex_number import ComplexNumber,produs,suma, modul_numar_complex, egale
 from list_management import calcul_numere_interval, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10
 from validation import validare_interval
-from service import srv_adauga_numar, srv_cauta_numere
+from service import srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
 
 
 def test_ComplexNumber():
@@ -121,6 +121,11 @@ def test_srv_cauta_numere():
     assert(srv_cauta_numere(list, 0, len(list)-1, "modul < 10") == [n0, n3, n4])
     assert(srv_cauta_numere(list, 0, len(list)-1, "modul = 10") == [n1, n2])
     assert(srv_cauta_numere(list, 0, 2, "parte imaginara") == [n0, n1, n2])
+    try:
+        assert(srv_cauta_numere(list, 0, 2, "invalid") == [])
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "cerinta invalida!\n")
 
 def test_suma():
     nr1 = ComplexNumber(5, 6)
@@ -151,6 +156,27 @@ def test_calcul_numere_interval():
     except Exception as ex:
         assert(str(ex) == "capat stanga invalid!\ncapat dreapta invalid!\n")
 
+def test_srv_calcul_numere_interval():
+    n0 = ComplexNumber(1, 2)
+    n1 = ComplexNumber(3, 2)
+    n2 = ComplexNumber(1, 1)
+
+    list = [n0, n1, n2]
+
+    assert(egale(srv_calcul_numere_interval(list, 0, 2, "suma"), ComplexNumber(5, 5)))
+    assert(egale(srv_calcul_numere_interval(list, 0, 1, "produs"), ComplexNumber(-1, 8)))
+    try:
+        srv_calcul_numere_interval(list, -1, -2, "suma")
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "capat stanga invalid!\ncapat dreapta invalid!\n")
+    try:
+        srv_calcul_numere_interval(list, 0, 1, "invalid")
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "formula invalida!\n")
+
+
 def run_tests():
     '''
     Functia apeleaza toate celelalte functii care
@@ -167,3 +193,4 @@ def run_tests():
     test_suma()
     test_produs()
     test_calcul_numere_interval()
+    test_srv_calcul_numere_interval()
