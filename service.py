@@ -1,5 +1,5 @@
 from complex_number import ComplexNumber, suma, produs
-from list_management import calcul_numere_interval, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere
+from list_management import calcul_numere_interval, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img
 from validation import validare_interval
 
 def srv_adauga_numar(list, number, poz):
@@ -62,3 +62,20 @@ def srv_calcul_numere_interval(list, stanga, dreapta, calcul):
         raise Exception("formula invalida!\n")
     rezultat = calcul_numere_interval(list, stanga, dreapta, clc)
     return rezultat
+
+def srv_sortare_desc_img(list):
+    '''
+        Comunicare dintre ui si program. Functia primeste din ui lista de numere complexe 
+        si o returneaza sortata dupa proprietatea ceruta
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+        output: sorted_list - lista sortata 
+                raises Exception: "lista vida!\n" daca lista 'list' nu contine elemente
+    '''
+
+    if len(list) == 0:
+        raise Exception("lista vida!\n")
+    sorted_list = sortare_desc_img(list)
+    return sorted_list
+
+    pass

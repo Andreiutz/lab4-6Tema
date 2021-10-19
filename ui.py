@@ -167,7 +167,13 @@ def ui_operatii_lista(list):
             return
         print("Produsul = " + produs.to_string())  
     if cmd == "sort_desc_im":
-        pass
+        try:
+            sorted_list = service.srv_sortare_desc_img(list)
+        except Exception as ex:
+            print(ex)
+            return
+        ui_afisare_lista(sorted_list)
+        
 
 
 

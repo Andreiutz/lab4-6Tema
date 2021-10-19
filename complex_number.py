@@ -18,7 +18,7 @@ class ComplexNumber:
         self.imaginar = imaginar
     
     def to_string(self):
-        return "[" + str(self.real) + " + " + str(self.imaginar) + "i] " 
+        return "[" + str(self.real) + "+" + str(self.imaginar) + "i]" 
 
 
 

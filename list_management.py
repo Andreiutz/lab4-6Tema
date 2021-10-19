@@ -82,3 +82,24 @@ def calcul_numere_interval(list, stanga, dreapta, calcul):
         rez = calcul(rez, number)
     return rez
     
+def sortare_desc_img(list):
+    '''
+        Functia sorteaza descrescator lista 'list' formata din 
+        numere complexe a+bi, a, b numere reale dupa partea imaginara
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+        output: sorted_list - lista sortata cu proprietatea ceruta
+    '''
+
+    sorted_list = list
+    sortat = False
+    #BubbleSort
+    while not sortat:
+        sortat = True
+        for i in range(0, len(sorted_list)-1):
+            if sorted_list[i].get_imaginar() < sorted_list[i+1].get_imaginar():
+                aux = sorted_list[i]
+                sorted_list[i] = sorted_list[i+1]
+                sorted_list[i+1] = aux
+                sortat = False
+    return sorted_list

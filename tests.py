@@ -1,7 +1,7 @@
 from complex_number import ComplexNumber,produs,suma, modul_numar_complex, egale
-from list_management import calcul_numere_interval, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10
+from list_management import calcul_numere_interval, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img
 from validation import validare_interval
-from service import srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
+from service import srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
 
 
 def test_ComplexNumber():
@@ -184,6 +184,41 @@ def test_srv_calcul_numere_interval():
     except Exception as ex:
         assert(str(ex) == "formula invalida!\n")
 
+def test_sortare_desc_img():
+    n0 = ComplexNumber(1,2)
+    n1 = ComplexNumber(4,3)
+    n2 = ComplexNumber(5,-4)
+    n3 = ComplexNumber(9,10)
+    n4 = ComplexNumber(0,0)
+    n5 = ComplexNumber(3,7)
+
+    list = [n0, n1, n2, n3, n4, n5]
+
+    sorted_list = sortare_desc_img(list)
+
+    assert (sorted_list == [n3, n5, n1, n0, n4, n2])
+
+def test_srv_sortare_desc_img():
+    n0 = ComplexNumber(1,2)
+    n1 = ComplexNumber(4,3)
+    n2 = ComplexNumber(5,-4)
+    n3 = ComplexNumber(9,10)
+    n4 = ComplexNumber(0,0)
+    n5 = ComplexNumber(3,7)
+
+    list = [n0, n1, n2, n3, n4, n5]
+
+    sorted_list = srv_sortare_desc_img(list)
+
+    assert (sorted_list == [n3, n5, n1, n0, n4, n2])
+
+    list = []
+
+    try:
+        assert(srv_sortare_desc_img(list) == [])
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "lista vida!\n")
 
 def run_tests():
     '''
@@ -202,3 +237,5 @@ def run_tests():
     test_produs()
     test_calcul_numere_interval()
     test_srv_calcul_numere_interval()
+    test_sortare_desc_img()
+    test_srv_sortare_desc_img()
