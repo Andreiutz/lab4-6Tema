@@ -46,7 +46,7 @@ def proprietate_modul_egal_10(complex_num):
         output: True, daca modulul numarului 'complex_num' - 10,
                 False, altfel
     '''
-    if abs(10 - modul_numar_complex(complex_num) < 0.0001): return True
+    if abs(10 - modul_numar_complex(complex_num)) < 0.0001: return True
     return False
 
 def cautare_numere(list, stanga, dreapta, proprietate):

@@ -125,11 +125,19 @@ def ui_cautare_numere(list):
             return 
         ui_afisare_lista_imaginar(secventa)
     if cmd == "modul_m10":
-        secventa = service.srv_cauta_numere(list, 0, len(list)-1, "modul < 10")
-        ui_afisare_lista(secventa)
+        try:
+            secventa = service.srv_cauta_numere(list, 0, len(list)-1, "modul < 10")
+            ui_afisare_lista(secventa)
+        except Exception as ex:
+            print(ex)
+            return
     if cmd == "modul_10":
-        secventa = service.srv_cauta_numere(list, 0, len(list)-1, "modul = 10")
-        ui_afisare_lista(secventa)
+        try:
+            secventa = service.srv_cauta_numere(list, 0, len(list)-1, "modul = 10")
+            ui_afisare_lista(secventa)
+        except Exception as ex:
+            print(ex)
+            return
 
 def ui_operatii_lista(list):
     ui_optiuni_operatii()

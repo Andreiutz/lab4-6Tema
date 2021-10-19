@@ -52,6 +52,14 @@ def test_validare_interval():
     Verifica daca functia validare_interval valideaza corect 
     capetele unui interval dintr-o lista 
     '''
+
+    l = []
+    try:
+        validare_interval(l, 0, 0)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "lista goala!\ncapat dreapta invalid!\n")
+
     #    0 1 2 3 4 5 6 7 8 9    <- indicii listei 'l'
     l = [1,2,3,4,5,6,7,8,9,10]
 
