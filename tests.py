@@ -1,6 +1,6 @@
 from complex_number import ComplexNumber,produs,suma, modul_numar_complex, egale
-from list_management import calcul_numere_interval, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img
-from validation import validare_interval
+from list_management import calcul_numere_interval, filtrare_p_reala_prim, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img
+from validation import validare_interval, validare_prim
 from service import srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
 
 
@@ -220,6 +220,29 @@ def test_srv_sortare_desc_img():
     except Exception as ex:
         assert(str(ex) == "lista vida!\n")
 
+def test_validare_prim():
+    assert(validare_prim(2) == True)
+    assert(validare_prim(-1) == False)
+    assert(validare_prim(3.4) == False)
+    assert(validare_prim(7) == True)
+    assert(validare_prim(9) == False)
+    assert(validare_prim(101) == True)
+    assert(validare_prim(17) == True)
+    assert(validare_prim(25) == False)
+    assert(validare_prim(2.02) == False)
+
+def test_filtrare_p_reala_prim():
+    n0 = ComplexNumber(1, 4)
+    n1 = ComplexNumber(2, 6)
+    n2 = ComplexNumber(7, -2)
+    n3 = ComplexNumber(2.01, 6)
+    n4 = ComplexNumber(10, -3)
+    n5 = ComplexNumber(7, 4)
+
+    list = [n0, n1, n2, n3, n4, n5]
+
+    assert(filtrare_p_reala_prim(list) == [n0, n3, n4])
+
 def run_tests():
     '''
     Functia apeleaza toate celelalte functii care
@@ -239,3 +262,5 @@ def run_tests():
     test_srv_calcul_numere_interval()
     test_sortare_desc_img()
     test_srv_sortare_desc_img()
+    test_validare_prim()
+    test_filtrare_p_reala_prim()

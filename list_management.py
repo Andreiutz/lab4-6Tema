@@ -1,5 +1,5 @@
 from complex_number import ComplexNumber, suma, modul_numar_complex
-from validation import validare_interval
+from validation import validare_interval, validare_prim
 
 
 
@@ -103,3 +103,33 @@ def sortare_desc_img(list):
                 sorted_list[i+1] = aux
                 sortat = False
     return sorted_list
+
+'''
+def stergere_element(list, poz):
+    
+        Functia sterge elementul de pe pozitia 'poz' din lista 'list'
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+               poz - pozitia de la care se vrea stergerea
+        output: -
+                raises: "pozitie invalida!\n" - daca pozitia data este mai mare decat lungimea sirului
+   
+    pass
+'''
+
+def filtrare_p_reala_prim(list):
+    '''
+        Functia filtreaza lista 'list' astfel incat se elimina
+        toate numerele complexe pentru care partea reala este un numar 
+        prim
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+        output: rez - lista filtrata
+    '''
+
+    rez = []
+
+    for number in list:
+        if validare_prim(number.get_real()) == False:
+            rez.append(number)
+    return rez

@@ -20,3 +20,21 @@ def validare_interval(list, stanga, dreapta):
     
     if len(ex) > 0:
         raise Exception(ex)
+
+def validare_prim(number):
+    '''
+        Functia verifica daca numarul 'number' este prim
+
+        input: number - numarul dat
+        output: True - daca numarul este prim
+                False- altfel
+    '''
+
+    intreg = int(number)
+    if (abs(intreg - number) > 0.000001): return False #numarul dat nu este intreg
+    if intreg < 2 or intreg > 2 and intreg % 2 == 0: return False
+    d = 3
+    while d*d <= intreg:
+        if intreg % d == 0: return False
+        d += 2
+    return True
