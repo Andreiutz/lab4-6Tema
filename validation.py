@@ -38,3 +38,25 @@ def validare_prim(number):
         if intreg % d == 0: return False
         d += 2
     return True
+
+def validare_lista_semn(list, semn):
+    '''
+        Functia verifica daca lista 'list' contine elemente
+        si daca 'semn' apartine de {'<', '=', '>'}
+
+        input: list - lista cu elemente numere complexe de forma a+bi, a, b reale
+               semn - {'<', '=', '>'}
+        output: -
+                raises Exception: "lista vida!\n" - daca lista este goala
+                                  "semn invalid!\n" - daca semnul e invalid
+
+    
+    '''
+    err = ""
+    if len(list) == 0:
+        err += "lista vida!\n"
+    if not semn in ['<', '=', '>']:
+        err += "semn invalid!\n"
+
+    if len(err) > 0:
+        raise Exception(err)

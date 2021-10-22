@@ -1,6 +1,6 @@
 from complex_number import ComplexNumber, suma, produs
-from list_management import calcul_numere_interval, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img
-from validation import validare_interval
+from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img
+from validation import validare_interval, validare_lista_semn
 
 def srv_adauga_numar(list, number, poz):
     '''
@@ -78,4 +78,32 @@ def srv_sortare_desc_img(list):
     sorted_list = sortare_desc_img(list)
     return sorted_list
 
-    pass
+def srv_filtrare_p_reala_prim(list):
+    '''
+        Comunicare dintre ui si program. Functia primeste din ui lista de numere complexe
+        si elimina din aceasta numerele care au partea reala un numar prim
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+        output: rez - lista sortata
+                raises Exception: "lista vida!\n" daca lista 'list' nu contine elemente
+    '''
+    if len(list) == 0:
+        raise Exception("lista vida!\n")
+    filter_list = filtrare_p_reala_prim(list)
+    return filter_list
+    
+def srv_filtrare_modul(list, numar, semn):
+    '''
+        Comunicare dintre ui si program. Functia filtreaza lista 'list'
+        astfel incat sa ramana doar numerele care au modului <, =, > decat
+        modulul numarului 'numar'
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+               numar - numarul real fata de care se raporteaza modulul
+               semn - conditia de comparatie ('<', '=' sau '>')
+               raises Exception: "lista vida!\n" daca lista este vida
+                                 "semn invalid!\n" daca semnul nu are una dintre valorile {'<', '=', '>'}
+    '''
+    validare_lista_semn(list, semn)
+    rez = filtrare_modul(list, numar, semn)
+    return rez

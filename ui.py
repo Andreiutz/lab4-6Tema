@@ -44,6 +44,10 @@ def ui_optiuni_operatii(): #4
 
 def ui_optiuni_filtrare(): #5
     #afisare in meniu
+    print("")
+    print("1) 'filtrare_p_reala'    - pentru eliminarea din lista a numerelor complexe cu parte reala numar prim")
+    print("2) 'filtrare_modul'      - pentru eliminarea din lista a numerelor care au modulul <, =, > decat un nr. dat")
+    print("")
     pass
 
 def ui_optiuni_undo(): #6
@@ -175,6 +179,30 @@ def ui_operatii_lista(list):
         ui_afisare_lista(sorted_list)
         
 
+def ui_filtrare_lista(list):
+    ui_optiuni_filtrare()
+    cmd = input(">>>")
+    if cmd == 'filtrare_p_reala':
+        try:
+            rez = service.srv_filtrare_p_reala_prim(list)
+        except Exception as ex:
+            print(ex)
+            return
+        ui_afisare_lista(rez)
+    if cmd == 'filtrare_modul':
+        try:
+            numar = float(input("numar = "))
+        except ValueError:
+            print("numar invalid!\n")
+            return
+        semn = input("semn = ")
+        try:
+            rez = service.srv_filtrare_modul(list, numar, semn)
+        except Exception as ex:
+            print(ex)
+            return
+        ui_afisare_lista(rez)
+
 
 
 def run():
@@ -191,8 +219,10 @@ def run():
             ui_afisare_lista(list)
         if cmd == "cautare_numere":     #3. Cautare numere
             ui_cautare_numere(list)
-        if cmd == "operatii_lista":
+        if cmd == "operatii_lista":     #4. Operatii cu numere din lista
             ui_operatii_lista(list)
+        if cmd == "filtrare_lista":
+            ui_filtrare_lista(list)
         if cmd == "exit":
             return
         

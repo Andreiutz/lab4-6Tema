@@ -112,7 +112,7 @@ def stergere_element(list, poz):
         input: list - lista cu numere complexe de forma a+bi, a, b reale
                poz - pozitia de la care se vrea stergerea
         output: -
-                raises: "pozitie invalida!\n" - daca pozitia data este mai mare decat lungimea sirului
+                
    
     pass
 '''
@@ -132,4 +132,29 @@ def filtrare_p_reala_prim(list):
     for number in list:
         if validare_prim(number.get_real()) == False:
             rez.append(number)
+    return rez
+
+def filtrare_modul(list, numar, semn):
+    '''
+        Functia filtreaza lista 'list' astfel incat se elimina toate numerele
+        complexe pentru care modului este <, = sau > decat un numar dat 'numar'
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+               numar - numarul fata de care se filtreaza lista
+               semn - are valoarea '<', '=' sau '>'
+
+    '''
+    rez = []
+    if semn == '<':
+        for compl in list:
+            if not(modul_numar_complex(compl) < numar): 
+                rez.append(compl)
+    if semn == '=':
+        for compl in list:
+            if not(abs(modul_numar_complex(compl) - numar) < 0.00001): 
+                rez.append(compl)
+    if semn == '>':
+        for compl in list:
+            if not(modul_numar_complex(compl) > numar): 
+                rez.append(compl)    
     return rez
