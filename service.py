@@ -1,5 +1,5 @@
 from complex_number import ComplexNumber, suma, produs
-from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img
+from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img, stergere_element
 from validation import validare_interval, validare_lista_semn
 
 def srv_adauga_numar(list, number, poz):
@@ -107,3 +107,17 @@ def srv_filtrare_modul(list, numar, semn):
     validare_lista_semn(list, semn)
     rez = filtrare_modul(list, numar, semn)
     return rez
+
+def srv_stergere_element(list, indice):
+    '''
+        Comunicare dintre ui si program. Functia primeste indicele intreg 'indice'
+        si sterge elementul din lista 'list' de la acea pozitie
+    
+        input: list - lista cu numere complexe a+bi, a, b reale
+               indice - numar intreg >= 0 si mai mic decat lungimea listei
+        output: - 
+                raises Exception: ("indice invalid\n") daca indicele e 
+                invalid
+    '''
+    stergere_element(list, indice)
+    

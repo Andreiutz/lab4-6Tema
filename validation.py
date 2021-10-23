@@ -60,3 +60,16 @@ def validare_lista_semn(list, semn):
 
     if len(err) > 0:
         raise Exception(err)
+
+def validare_indice(list, indice):
+    '''
+        Functia verifica daca indicele 'indice' este valid pentru
+        lista 'list'
+
+        input: list - lista cu numere complexe a+bi, a, b reale
+        output: -
+                raises Exception: "indice invalid\n" - daca indicele 'indice'
+                nu se incadreaza listei 'list'
+    '''
+    if indice < 0 or indice > len(list)-1:
+        raise Exception("indice invalid\n")

@@ -1,7 +1,7 @@
 from complex_number import ComplexNumber,produs,suma, modul_numar_complex, egale
-from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img
-from validation import validare_lista_semn, validare_interval, validare_prim
-from service import srv_filtrare_modul, srv_filtrare_p_reala_prim, srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
+from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img, stergere_element
+from validation import validare_indice, validare_lista_semn, validare_interval, validare_prim
+from service import srv_stergere_element, srv_filtrare_modul, srv_filtrare_p_reala_prim, srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
 
 
 def test_ComplexNumber():
@@ -334,6 +334,81 @@ def test_validare_lista_semn():
     except Exception as ex:
         assert(str(ex) == "semn invalid!\n")
 
+def test_validare_indice():
+    try:
+        assert(validare_indice([], 0))
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "indice invalid\n")
+
+    try:
+        assert(validare_indice([1,2], -1))
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "indice invalid\n")    
+
+    try:
+        assert(validare_indice([1,2,3], 4))
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "indice invalid\n")   
+
+def test_stergere_element():
+    n0 = ComplexNumber(1, 4)
+    n1 = ComplexNumber(2, -19)
+    n2 = ComplexNumber(7, -2)
+    n3 = ComplexNumber(8, 6)
+    n4 = ComplexNumber(10, 0)
+    n5 = ComplexNumber(11, 4)
+
+    list = [n0, n1, n2, n3, n4, n5]
+
+    stergere_element(list, 0)
+    assert(list == [n1, n2, n3, n4, n5])
+
+    stergere_element(list, 3)
+    assert(list == [n1, n2, n3, n5])
+
+    try:
+        stergere_element(list, -1)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "indice invalid\n")
+    
+    try:
+        stergere_element(list, 10)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "indice invalid\n")
+
+def test_srv_stergere_element():
+    n0 = ComplexNumber(1, 4)
+    n1 = ComplexNumber(2, -19)
+    n2 = ComplexNumber(7, -2)
+    n3 = ComplexNumber(8, 6)
+    n4 = ComplexNumber(10, 0)
+    n5 = ComplexNumber(11, 4)
+
+    list = [n0, n1, n2, n3, n4, n5]
+
+    srv_stergere_element(list, 0)
+    assert(list == [n1, n2, n3, n4, n5])
+
+    srv_stergere_element(list, 3)
+    assert(list == [n1, n2, n3, n5])
+
+    try:
+        srv_stergere_element(list, -1)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "indice invalid\n")
+    
+    try:
+        srv_stergere_element(list, 10)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "indice invalid\n")
+
 def run_tests():
     '''
     Functia apeleaza toate celelalte functii care
@@ -359,3 +434,6 @@ def run_tests():
     test_filtrare_modul()
     test_srv_filtrare_modul()
     test_validare_lista_semn()
+    test_validare_indice()
+    test_stergere_element()
+    test_srv_stergere_element()

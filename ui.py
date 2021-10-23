@@ -24,12 +24,17 @@ def ui_optiuni_adauga(): #1
 
 def ui_optiuni_modificare(): #2
     #afisare in meniu
+    print("")
+    print("1) 'sterge_element'    - pentru a sterge un element de pe o pozitie data")
+    print("2) 'sterge_interval'   - pentru a sterge elemente dintr-un interval dat")
+    print("3) 'inlocuire_numar'   - pentru a modifica toate aparitiile unui numar dat cu altul" )
+    print("")
     pass
 
 def ui_optiuni_cautare(): #3
     #afisare in meniu
     print("")
-    print("1) 'parte_imaginara  -  pentru afisarea partii imaginare a tuturor numerelor din lista'")
+    print("1) 'parte_imaginara  - pentru afisarea partii imaginare a tuturor numerelor din lista'")
     print("2) 'modul_m10'       - pentru afisarea numerelor cu modului < 10")
     print("3) 'modul_10         - pentru afisarea numerelor cu modului = 10")
     print("")
@@ -94,6 +99,22 @@ def ui_adauga_numar(list):
     else: 
         print("valoare invalida\n")
         return
+
+def ui_modifica_lista(list):
+    ui_optiuni_modificare()
+    cmd = input(">>>")
+    if cmd == "sterge_element":
+        try:
+            pozitie = int(input("pozitia= "))
+        except ValueError:
+            print("pozitie invalida!\n")
+            return
+        try:
+            service.srv_stergere_element(list, pozitie)
+        except Exception as ex:
+            print(ex)
+            return 
+    pass
 
 def ui_afisare_lista(lista):
     rez = ""
@@ -215,14 +236,16 @@ def run():
                 ui_adauga_numar(list) #1. Adauga numar in lista
             except Exception as ex:
                 print(ex)
-        if cmd == "afisare_lista":
-            ui_afisare_lista(list)
+        if cmd == "modifica_lista":
+            ui_modifica_lista(list)
         if cmd == "cautare_numere":     #3. Cautare numere
             ui_cautare_numere(list)
         if cmd == "operatii_lista":     #4. Operatii cu numere din lista
             ui_operatii_lista(list)
-        if cmd == "filtrare_lista":
+        if cmd == "filtrare_lista":     #5. Filtrare lista
             ui_filtrare_lista(list)
+        if cmd == "afisare_lista":
+            ui_afisare_lista(list)
         if cmd == "exit":
             return
         

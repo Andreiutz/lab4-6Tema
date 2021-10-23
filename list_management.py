@@ -1,5 +1,5 @@
 from complex_number import ComplexNumber, suma, modul_numar_complex
-from validation import validare_interval, validare_prim
+from validation import validare_indice, validare_interval, validare_prim
 
 
 
@@ -104,18 +104,19 @@ def sortare_desc_img(list):
                 sortat = False
     return sorted_list
 
-'''
+
 def stergere_element(list, poz):
-    
+    '''
         Functia sterge elementul de pe pozitia 'poz' din lista 'list'
 
         input: list - lista cu numere complexe de forma a+bi, a, b reale
                poz - pozitia de la care se vrea stergerea
         output: -
-                
+    '''
+    validare_indice(list, poz)
+    del list[poz]        
    
-    pass
-'''
+
 
 def filtrare_p_reala_prim(list):
     '''
