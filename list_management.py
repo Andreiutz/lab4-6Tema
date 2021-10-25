@@ -1,4 +1,4 @@
-from complex_number import ComplexNumber, suma, modul_numar_complex
+from complex_number import ComplexNumber, egale, suma, modul_numar_complex
 from validation import validare_indice, validare_interval, validare_prim
 
 
@@ -116,7 +116,57 @@ def stergere_element(list, poz):
     validare_indice(list, poz)
     del list[poz]        
    
+def stergere_interval(list, stanga, dreapta):
+    '''
+        Functia sterge toate elementele dintre pozitiile 'stanga' si 'dreapta'
+        din lista 'list'
 
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+               stanga - capatul stang al intervalului care trebuie sters
+               dreapta - capatul drept al intervalului care trebuie sters
+               raises Exception:   "lista goala!\n" - daca lista nu contine niciun element
+                                    "capat stanga invalid!\n" - daca 'stanga' < 0 sau 'stanga' > 'dreapta'
+                                    "capat dreapta invalid!\n" - daca 'dreapta' < 'stanga' sau 'dreapta' > len(list)
+    '''
+    validare_interval(list, stanga, dreapta)
+    while stanga <= dreapta:
+        del list[dreapta]
+        dreapta -= 1
+    pass
+
+def pozitii_element(list, numar):
+    '''
+        Functia gaseste toate pozitiile pe care se afla numarul 'numar'
+        in lista 'list'
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+               numar - numar complex de forma a+bi, a, b reale
+        output: pozitii - lista cu pozitiile pe care se afla numarul 'numar' in lista 'list'
+    '''
+    pozitii = []
+    for i in range(0, len(list)):
+        if egale(list[i], numar):
+            pozitii.append(i)
+    return pozitii
+
+
+def modificare_elemente(list, numar, nou):
+    '''
+        Functia inlocuieste toate aparitiile numarului complex 'numar' din lista 'list'
+        cu numarul complex 'nou'
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+               numar - numarul care se cauta pentru a fi inlocuit
+               nou - numarul cu care se inlocuieste numarul 'numar'
+        output: -
+                raises Exception: "numarul nu are nicio aparitie!\n" - daca numarul 'numar' nu apare in 
+                                    lista 'list'
+    '''
+    pozitii = pozitii_element(list, numar)
+    if len(pozitii) == 0:
+        raise Exception("numarul nu are nicio aparitie!\n")
+    for poz in pozitii:
+        list[poz] = nou
 
 def filtrare_p_reala_prim(list):
     '''

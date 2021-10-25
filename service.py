@@ -1,5 +1,5 @@
 from complex_number import ComplexNumber, suma, produs
-from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img, stergere_element
+from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img, stergere_element, stergere_interval
 from validation import validare_interval, validare_lista_semn
 
 def srv_adauga_numar(list, number, poz):
@@ -121,3 +121,34 @@ def srv_stergere_element(list, indice):
     '''
     stergere_element(list, indice)
     
+def srv_stergere_interval(list, stanga, dreapta):
+    '''
+        Comunicare dintre ui si program. Functia primeste indicii indicii intregi 'stanga' si
+        'dreapta' si sterge toate elementele din lista 'list' ce se gasesc in intervalul
+        ['stanga', 'dreapta']
+
+        input: list - lista cu numere complexe a+bi, a, b reale
+               stanga - capatul stang al intervalului care trebuie sters
+               dreapta - capatul drept al intervalului care trebuie sters
+        output: -
+                raises Exception:   "lista goala!\n" - daca lista nu contine niciun element
+                                    "capat stanga invalid!\n" - daca 'stanga' < 0 sau 'stanga' > 'dreapta'
+                                    "capat dreapta invalid!\n" - daca 'dreapta' < 'stanga' sau 'dreapta' > len(list)
+    '''
+    stergere_interval(list, stanga, dreapta)
+    pass
+
+def srv_modificare_element(list, numar, nou):
+    '''
+        Comunicare dintre ui si program. Functia inlocuieste toate aparitiile numarului 'numar'
+        cu numarul 'nou' in lista 'list'
+
+        input: list - lista cu numere complexe de forma a+bi, a, b reale
+               numar - numarul care se cauta pentru a fi inlocuit
+               nou - numarul cu care se inlocuieste numarul 'numar'
+        output: -
+                raises Exception: "numarul nu are nicio aparitie!\n" - daca numarul 'numar' nu apare in 
+                                    lista 'list'
+    '''
+    modificare_elemente(list, numar, nou)
+    pass

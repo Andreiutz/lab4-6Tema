@@ -1,7 +1,7 @@
 from complex_number import ComplexNumber,produs,suma, modul_numar_complex, egale
-from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img, stergere_element
+from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, pozitii_element, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img, stergere_element, stergere_interval
 from validation import validare_indice, validare_lista_semn, validare_interval, validare_prim
-from service import srv_stergere_element, srv_filtrare_modul, srv_filtrare_p_reala_prim, srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
+from service import srv_modificare_element, srv_stergere_interval, srv_stergere_element, srv_filtrare_modul, srv_filtrare_p_reala_prim, srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
 
 
 def test_ComplexNumber():
@@ -409,6 +409,167 @@ def test_srv_stergere_element():
     except Exception as ex:
         assert(str(ex) == "indice invalid\n")
 
+def test_stergere_interval():
+    n0 = ComplexNumber(1, 4)
+    n1 = ComplexNumber(2, -19)
+    n2 = ComplexNumber(7, -2)
+    n3 = ComplexNumber(8, 6)
+    n4 = ComplexNumber(10, 0)
+    n5 = ComplexNumber(11, 4)
+    n6 = ComplexNumber(10, 11)
+    n7 = ComplexNumber(-1, -4)
+
+    list = [n0, n1, n2, n3, n4, n5, n6, n7]
+
+    stergere_interval(list, 0, 0)
+    assert(list == [n1, n2, n3, n4, n5, n6, n7])
+    stergere_interval(list, 1, 3)
+    assert(list == [n1, n5, n6, n7])
+    
+    try:
+        stergere_interval(list, 1, 10)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "capat dreapta invalid!\n")
+    
+    try:
+        stergere_interval(list, -1, 3)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "capat stanga invalid!\n")
+
+    try:
+        stergere_interval(list, -2, -3)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "capat stanga invalid!\ncapat dreapta invalid!\n")
+
+    stergere_interval(list, 0, 3)
+    assert(list == [])
+
+    try:
+        stergere_interval(list, -2, 0)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "lista goala!\ncapat stanga invalid!\ncapat dreapta invalid!\n")
+
+def test_srv_stergere_interval():
+    n0 = ComplexNumber(1, 4)
+    n1 = ComplexNumber(2, -19)
+    n2 = ComplexNumber(7, -2)
+    n3 = ComplexNumber(8, 6)
+    n4 = ComplexNumber(10, 0)
+    n5 = ComplexNumber(11, 4)
+    n6 = ComplexNumber(10, 11)
+    n7 = ComplexNumber(-1, -4)
+
+    list = [n0, n1, n2, n3, n4, n5, n6, n7]
+
+    srv_stergere_interval(list, 0, 0)
+    assert(list == [n1, n2, n3, n4, n5, n6, n7])
+    stergere_interval(list, 1, 3)
+    assert(list == [n1, n5, n6, n7])
+    
+    try:
+        srv_stergere_interval(list, 1, 10)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "capat dreapta invalid!\n")
+    
+    try:
+        srv_stergere_interval(list, -1, 3)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "capat stanga invalid!\n")
+
+    try:
+        srv_stergere_interval(list, -2, -3)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "capat stanga invalid!\ncapat dreapta invalid!\n")
+
+    srv_stergere_interval(list, 0, 3)
+    assert(list == [])
+
+    try:
+        srv_stergere_interval(list, -2, 0)
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "lista goala!\ncapat stanga invalid!\ncapat dreapta invalid!\n")
+
+def test_pozitii_element():
+    n0 = ComplexNumber(0,0)
+    n1 = ComplexNumber(1,1)
+    n2 = ComplexNumber(0,0)
+    n3 = ComplexNumber(2,2)
+    n4 = ComplexNumber(0,0)
+    n5 = ComplexNumber(3,3)
+    n6 = ComplexNumber(3,3)
+    n7 = ComplexNumber(4,4)
+    n8 = ComplexNumber(0,0)
+
+    list = [n0, n1, n2, n3, n4, n5, n6, n7, n8]
+
+    assert(pozitii_element(list, ComplexNumber(0,0)) == [0,2,4,8])
+    assert(pozitii_element(list, ComplexNumber(1,1)) == [1])
+    assert(pozitii_element(list, ComplexNumber(3,3)) == [5,6])
+    assert(pozitii_element(list, ComplexNumber(1,2)) == [])
+
+def test_modificare_elemente():
+    n0 = ComplexNumber(0,0)
+    n1 = ComplexNumber(1,1)
+    n2 = ComplexNumber(0,0)
+    n3 = ComplexNumber(2,2)
+    n4 = ComplexNumber(0,0)
+    n5 = ComplexNumber(3,3)
+    n6 = ComplexNumber(3,3)
+    n7 = ComplexNumber(4,4)
+    n8 = ComplexNumber(0,0)
+
+    list = [n0, n1, n2, n3, n4, n5, n6, n7, n8]
+
+    nm1 = ComplexNumber(-1, -1)
+    nm2 = ComplexNumber(-2, -2)
+
+    modificare_elemente(list, n0, nm1)
+    assert(list == [nm1, n1, nm1, n3, nm1, n5, n6, n7, nm1])
+    modificare_elemente(list, n3, nm2)
+    assert(list == [nm1, n1, nm1, nm2, nm1, n5, n6, n7, nm1])
+
+    try:
+        modificare_elemente(list, ComplexNumber(-100, -100), ComplexNumber(0,0))
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "numarul nu are nicio aparitie!\n")
+
+def test_srv_modificare_interval():
+    n0 = ComplexNumber(0,0)
+    n1 = ComplexNumber(1,1)
+    n2 = ComplexNumber(0,0)
+    n3 = ComplexNumber(2,2)
+    n4 = ComplexNumber(0,0)
+    n5 = ComplexNumber(3,3)
+    n6 = ComplexNumber(3,3)
+    n7 = ComplexNumber(4,4)
+    n8 = ComplexNumber(0,0)
+
+    list = [n0, n1, n2, n3, n4, n5, n6, n7, n8]
+
+    nm1 = ComplexNumber(-1, -1)
+    nm2 = ComplexNumber(-2, -2)
+
+    srv_modificare_element(list, n0, nm1)
+    assert(list == [nm1, n1, nm1, n3, nm1, n5, n6, n7, nm1])
+    srv_modificare_element(list, n3, nm2)
+    assert(list == [nm1, n1, nm1, nm2, nm1, n5, n6, n7, nm1])
+
+    try:
+        srv_modificare_element(list, ComplexNumber(-100, -100), ComplexNumber(0,0))
+        assert(False)
+    except Exception as ex:
+        assert(str(ex) == "numarul nu are nicio aparitie!\n")
+
+
 def run_tests():
     '''
     Functia apeleaza toate celelalte functii care
@@ -437,3 +598,8 @@ def run_tests():
     test_validare_indice()
     test_stergere_element()
     test_srv_stergere_element()
+    test_stergere_interval()
+    test_srv_stergere_interval()
+    test_pozitii_element()
+    test_modificare_elemente()
+    test_srv_modificare_interval()

@@ -114,7 +114,46 @@ def ui_modifica_lista(list):
         except Exception as ex:
             print(ex)
             return 
-    pass
+    if cmd == "sterge_interval":
+        try:
+            stanga, dreapta = ui_citire_indici()
+        except Exception as ex:
+            print(ex)
+            return  
+        try:
+            service.srv_stergere_interval(list, stanga, dreapta)
+        except Exception as ex:
+            print(ex)
+            return
+    if cmd == "inlocuire_numar":
+        try:
+            real = float(input("parte reala numar de schimbat = "))
+        except ValueError:
+            print("Parte reala invalida")
+            return 
+
+        try:
+            imaginar = float(input("parte imaginara numar de schimbat = "))
+        except ValueError:
+            print("Parte imaginara invalida\n")
+            return
+
+        try:
+            realNou = float(input("parte reala numar nou = "))
+        except ValueError:
+            print("Parte reala invalida")
+            return 
+
+        try:
+            imaginarNou = float(input("parte imaginara numar nou = "))
+        except ValueError:
+            print("Parte imaginara invalida\n")
+            return
+        try:
+            service.srv_modificare_element(list, ComplexNumber(real, imaginar), ComplexNumber(realNou, imaginarNou))
+        except Exception as ex:
+            print(ex)
+            return
 
 def ui_afisare_lista(lista):
     rez = ""
