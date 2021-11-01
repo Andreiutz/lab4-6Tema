@@ -80,3 +80,16 @@ def produs(number1, number2):
     real = n1Real * n2Real - n1Imaginar*n2Imaginar
     imaginar = n1Real * n2Imaginar + n2Real * n1Imaginar
     return ComplexNumber(real, imaginar)
+
+def diferenta(number1, number2):
+    '''
+        Functia calculeaza diferenta dintre numerele complexe 'number1' si 
+        'number2'
+
+        input: number1 - numar complex de forma a+bi, a, b reale
+               number2 - numar complex de forma a+bi, a, b reale
+        output: diferenta dintre cele doua numere complexe 'number1' si 'number2'
+    '''
+    real = number1.get_real() - number2.get_real()
+    imaginar = number1.get_imaginar() - number2.get_imaginar()
+    return ComplexNumber(real, imaginar)

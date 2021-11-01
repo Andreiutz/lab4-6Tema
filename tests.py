@@ -1,7 +1,7 @@
-from complex_number import ComplexNumber,produs,suma, modul_numar_complex, egale
-from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, pozitii_element, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img, stergere_element, stergere_interval
+from complex_number import ComplexNumber, diferenta,produs,suma, modul_numar_complex, egale
+from list_management import  calcul_numere_interval, copy_list, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, pozitii_element, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img, stergere_element, stergere_interval
 from validation import validare_indice, validare_lista_semn, validare_interval, validare_prim
-from service import srv_modificare_element, srv_stergere_interval, srv_stergere_element, srv_filtrare_modul, srv_filtrare_p_reala_prim, srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere
+from service import srv_modificare_element, srv_stergere_interval, srv_stergere_element, srv_filtrare_modul, srv_filtrare_p_reala_prim, srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere, srv_undo_list
 
 
 def test_ComplexNumber():
@@ -102,17 +102,20 @@ def test_srv_adauga_numar():
         Testare functie srv_adauga_numar
     '''
     list = []
+    history = []
     number1 = ComplexNumber(22, 44)
     number2 = ComplexNumber(55, -1)
     number3 = ComplexNumber(0, -1)
-    srv_adauga_numar(list, number1, 0)
+    srv_adauga_numar(list, number1, 0, history)
     assert(len(list) == 1)
+    assert(len(history) == 1)
     assert(egale(list[0], number1))
-    srv_adauga_numar(list, number2, 0)
+    srv_adauga_numar(list, number2, 0, history)
     assert(len(list) == 2)
+    assert(len(history) == 2)
     assert(egale(list[0], number2))
     try:
-        srv_adauga_numar(list, number3, 5)
+        srv_adauga_numar(list, number3, 5, history)
         assert(False)
     except Exception as ex:
         assert(str(ex) == "pozitie invalida!\n")
@@ -389,22 +392,25 @@ def test_srv_stergere_element():
     n4 = ComplexNumber(10, 0)
     n5 = ComplexNumber(11, 4)
 
-    list = [n0, n1, n2, n3, n4, n5]
+    list = [0,1,2,3,4,5]
+    history = []
 
-    srv_stergere_element(list, 0)
-    assert(list == [n1, n2, n3, n4, n5])
-
-    srv_stergere_element(list, 3)
-    assert(list == [n1, n2, n3, n5])
+    srv_stergere_element(list, 0, history)
+    assert(list == [1, 2, 3, 4, 5])
+    assert(history == [[0, 1, 2, 3, 4, 5]])
+    
+    srv_stergere_element(list, 3, history)
+    assert(list == [1, 2, 3, 5])
+    assert(history == [[0,1, 2, 3, 4, 5], [1, 2, 3, 4, 5]])
 
     try:
-        srv_stergere_element(list, -1)
+        srv_stergere_element(list, -1, history)
         assert(False)
     except Exception as ex:
         assert(str(ex) == "indice invalid\n")
     
     try:
-        srv_stergere_element(list, 10)
+        srv_stergere_element(list, 10, history)
         assert(False)
     except Exception as ex:
         assert(str(ex) == "indice invalid\n")
@@ -464,35 +470,38 @@ def test_srv_stergere_interval():
     n7 = ComplexNumber(-1, -4)
 
     list = [n0, n1, n2, n3, n4, n5, n6, n7]
+    history = []
 
-    srv_stergere_interval(list, 0, 0)
+    srv_stergere_interval(list, 0, 0, history)
     assert(list == [n1, n2, n3, n4, n5, n6, n7])
-    stergere_interval(list, 1, 3)
+    assert(history == [[n0, n1, n2, n3, n4, n5, n6, n7]])
+    srv_stergere_interval(list, 1, 3, history)
     assert(list == [n1, n5, n6, n7])
+    assert(history == [[n0, n1, n2, n3, n4, n5, n6, n7], [n1, n2, n3, n4, n5, n6, n7]])
     
     try:
-        srv_stergere_interval(list, 1, 10)
+        srv_stergere_interval(list, 1, 10, history)
         assert(False)
     except Exception as ex:
         assert(str(ex) == "capat dreapta invalid!\n")
     
     try:
-        srv_stergere_interval(list, -1, 3)
+        srv_stergere_interval(list, -1, 3, history)
         assert(False)
     except Exception as ex:
         assert(str(ex) == "capat stanga invalid!\n")
 
     try:
-        srv_stergere_interval(list, -2, -3)
+        srv_stergere_interval(list, -2, -3, history)
         assert(False)
     except Exception as ex:
         assert(str(ex) == "capat stanga invalid!\ncapat dreapta invalid!\n")
 
-    srv_stergere_interval(list, 0, 3)
+    srv_stergere_interval(list, 0, 3, history)
     assert(list == [])
 
     try:
-        srv_stergere_interval(list, -2, 0)
+        srv_stergere_interval(list, -2, 0, history)
         assert(False)
     except Exception as ex:
         assert(str(ex) == "lista goala!\ncapat stanga invalid!\ncapat dreapta invalid!\n")
@@ -553,21 +562,59 @@ def test_srv_modificare_interval():
     n7 = ComplexNumber(4,4)
     n8 = ComplexNumber(0,0)
 
+    history = []
+
     list = [n0, n1, n2, n3, n4, n5, n6, n7, n8]
 
     nm1 = ComplexNumber(-1, -1)
     nm2 = ComplexNumber(-2, -2)
 
-    srv_modificare_element(list, n0, nm1)
+    srv_modificare_element(list, n0, nm1, history)
     assert(list == [nm1, n1, nm1, n3, nm1, n5, n6, n7, nm1])
-    srv_modificare_element(list, n3, nm2)
+    assert(history == [[n0, n1, n2, n3, n4, n5, n6, n7, n8]])
+    srv_modificare_element(list, n3, nm2, history)
     assert(list == [nm1, n1, nm1, nm2, nm1, n5, n6, n7, nm1])
+    assert(history == [[n0, n1, n2, n3, n4, n5, n6, n7, n8],[nm1, n1, nm1, n3, nm1, n5, n6, n7, nm1]])
 
     try:
-        srv_modificare_element(list, ComplexNumber(-100, -100), ComplexNumber(0,0))
+        srv_modificare_element(list, ComplexNumber(-100, -100), ComplexNumber(0,0), history)
         assert(False)
     except Exception as ex:
         assert(str(ex) == "numarul nu are nicio aparitie!\n")
+
+def test_diferenta():
+    n1 = ComplexNumber(10,5)
+    n2 = ComplexNumber(4,10)
+
+    assert(egale(diferenta(n1, n2), ComplexNumber(6,-5)))
+    assert(egale(diferenta(n2, n1), ComplexNumber(-6,5)))
+
+def test_copy_list():
+    n0 = ComplexNumber(1,2)
+    n1 = ComplexNumber(2,3)
+    n2 = ComplexNumber(3,4)
+    l1 = [n0, n1, n2]
+    l2 = copy_list(l1)
+    assert(l1 == l2)
+
+def test_srv_undo_list():
+    list = [1,2,3]
+    history = []
+    history.append(copy_list(list))
+    list.append(4)
+    history.append(copy_list(list))
+    list.append(5)
+    history.append(copy_list(list))
+    list.append(6)
+    srv_undo_list(list, history)
+    assert(list == [1,2,3,4,5])
+    assert(history == [[1,2,3], [1,2,3,4]])
+    srv_undo_list(list, history)
+    assert(list == [1,2,3,4])
+    assert(history == [[1,2,3]])
+
+    
+    
 
 
 def run_tests():
@@ -585,6 +632,7 @@ def run_tests():
     test_srv_cauta_numere()
     test_suma()
     test_produs()
+    test_diferenta() 
     test_calcul_numere_interval()
     test_srv_calcul_numere_interval()
     test_sortare_desc_img()
@@ -603,3 +651,5 @@ def run_tests():
     test_pozitii_element()
     test_modificare_elemente()
     test_srv_modificare_interval()
+    test_copy_list()
+    test_srv_undo_list()

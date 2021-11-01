@@ -1,8 +1,8 @@
-from complex_number import ComplexNumber, suma, produs
-from list_management import calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img, stergere_element, stergere_interval
+from complex_number import ComplexNumber, diferenta, suma, produs
+from list_management import copy_list, calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img, stergere_element, stergere_interval
 from validation import validare_interval, validare_lista_semn
 
-def srv_adauga_numar(list, number, poz):
+def srv_adauga_numar(list, number, poz, history):
     '''
         Comunicare dintre ui si program. Adauga numarul 'number'
 
@@ -12,7 +12,9 @@ def srv_adauga_numar(list, number, poz):
         output: -
                 raises Exception: "pozitie invalida!\n" - daca pozitia introdusa este invalida
     '''
+    copy = copy_list(list)
     adauga_element(list, number, poz)
+    history.append(copy)
 
 def srv_cauta_numere(list, stanga, dreapta, proprietate):
     '''
@@ -58,6 +60,8 @@ def srv_calcul_numere_interval(list, stanga, dreapta, calcul):
         clc = suma
     elif calcul == "produs":
         clc = produs
+    elif calcul == "diferenta":
+        clc = diferenta
     else:
         raise Exception("formula invalida!\n")
     rezultat = calcul_numere_interval(list, stanga, dreapta, clc)
@@ -108,7 +112,7 @@ def srv_filtrare_modul(list, numar, semn):
     rez = filtrare_modul(list, numar, semn)
     return rez
 
-def srv_stergere_element(list, indice):
+def srv_stergere_element(list, indice, history):
     '''
         Comunicare dintre ui si program. Functia primeste indicele intreg 'indice'
         si sterge elementul din lista 'list' de la acea pozitie
@@ -119,9 +123,11 @@ def srv_stergere_element(list, indice):
                 raises Exception: ("indice invalid\n") daca indicele e 
                 invalid
     '''
+    copy = copy_list(list)
     stergere_element(list, indice)
+    history.append(copy)
     
-def srv_stergere_interval(list, stanga, dreapta):
+def srv_stergere_interval(list, stanga, dreapta, history):
     '''
         Comunicare dintre ui si program. Functia primeste indicii indicii intregi 'stanga' si
         'dreapta' si sterge toate elementele din lista 'list' ce se gasesc in intervalul
@@ -135,10 +141,11 @@ def srv_stergere_interval(list, stanga, dreapta):
                                     "capat stanga invalid!\n" - daca 'stanga' < 0 sau 'stanga' > 'dreapta'
                                     "capat dreapta invalid!\n" - daca 'dreapta' < 'stanga' sau 'dreapta' > len(list)
     '''
+    copy = copy_list(list)
     stergere_interval(list, stanga, dreapta)
-    pass
+    history.append(copy)
 
-def srv_modificare_element(list, numar, nou):
+def srv_modificare_element(list, numar, nou, history):
     '''
         Comunicare dintre ui si program. Functia inlocuieste toate aparitiile numarului 'numar'
         cu numarul 'nou' in lista 'list'
@@ -150,5 +157,25 @@ def srv_modificare_element(list, numar, nou):
                 raises Exception: "numarul nu are nicio aparitie!\n" - daca numarul 'numar' nu apare in 
                                     lista 'list'
     '''
+    copy = copy_list(list)
     modificare_elemente(list, numar, nou)
-    pass
+    history.append(copy)
+    
+    
+def srv_undo_list(list, history):
+
+    '''
+        Functia atribuie listei 'list' forma ei precedenta
+        retinuta in lista de liste 'history'
+
+        input: list - lista cu numere complexe a+bi, a, b reale
+               history - lista ce contine toate variantele precedente ale listei 'list'
+        output: rez - lista salvata precedent, daca exista
+                raise Exception("Undo nu poate fi realizat!\n") daca nu exista variante precedente
+    '''
+
+    if len(history) != 0:
+        list[:] = history[-1]
+        history.pop()
+    else:
+        raise Exception("Undo nu poate fi realizat!\n")

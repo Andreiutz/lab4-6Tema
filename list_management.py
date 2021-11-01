@@ -1,8 +1,6 @@
 from complex_number import ComplexNumber, egale, suma, modul_numar_complex
 from validation import validare_indice, validare_interval, validare_prim
 
-
-
 def adauga_element(list, element, pozitie):
     '''
         Functia adauga numarul complex nou 'element' la o pozitia 'pozitie'
@@ -200,12 +198,27 @@ def filtrare_modul(list, numar, semn):
         for compl in list:
             if not(modul_numar_complex(compl) < numar): 
                 rez.append(compl)
-    if semn == '=':
+    elif semn == '=':
         for compl in list:
             if not(abs(modul_numar_complex(compl) - numar) < 0.00001): 
                 rez.append(compl)
-    if semn == '>':
+    elif semn == '>':
         for compl in list:
             if not(modul_numar_complex(compl) > numar): 
-                rez.append(compl)    
+                rez.append(compl) 
+    else: raise Exception("semn invalid!\n") 
+    return rez
+
+def copy_list(list):
+    '''
+        Functia returneaza o copie a listei 'list'
+
+        input: list - lista de elemente
+        output: rez - lista rezultata
+    '''
+
+    rez = []
+
+    for element in list:
+        rez.append(element)
     return rez

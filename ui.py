@@ -45,6 +45,7 @@ def ui_optiuni_operatii(): #4
     print("1) 'suma'        - pentru calcularea sumei dintr-un interval")
     print("2) 'produs'      - pentru calcularea produsului dintr-un interval")
     print("3) 'sort_desc_im'- pentru afisarea listei ordonata desc. dupa partea imaginara")
+    print("4) 'diferenta'   - pentru calcularea diferentei dintr-un interval dat")
     print("")
 
 def ui_optiuni_filtrare(): #5
@@ -71,7 +72,7 @@ def ui_citire_indici():
     l = [stanga, dreapta]
     return l
 
-def ui_adauga_numar(list):
+def ui_adauga_numar(list, history):
     try:
         real = float(input("parte reala = "))
     except ValueError:
@@ -93,14 +94,14 @@ def ui_adauga_numar(list):
         except ValueError:
             print("pozitie invalida!\n")
             return
-        service.srv_adauga_numar(list, numar, poz)
+        service.srv_adauga_numar(list, numar, poz, history)
     elif pozitie == "capat":
-        service.srv_adauga_numar(list, numar, len(list))
+        service.srv_adauga_numar(list, numar, len(list), history)
     else: 
         print("valoare invalida\n")
         return
 
-def ui_modifica_lista(list):
+def ui_modifica_lista(list, history):
     ui_optiuni_modificare()
     cmd = input(">>>")
     if cmd == "sterge_element":
@@ -110,7 +111,7 @@ def ui_modifica_lista(list):
             print("pozitie invalida!\n")
             return
         try:
-            service.srv_stergere_element(list, pozitie)
+            service.srv_stergere_element(list, pozitie, history)
         except Exception as ex:
             print(ex)
             return 
@@ -121,7 +122,7 @@ def ui_modifica_lista(list):
             print(ex)
             return  
         try:
-            service.srv_stergere_interval(list, stanga, dreapta)
+            service.srv_stergere_interval(list, stanga, dreapta, history)
         except Exception as ex:
             print(ex)
             return
@@ -150,15 +151,19 @@ def ui_modifica_lista(list):
             print("Parte imaginara invalida\n")
             return
         try:
-            service.srv_modificare_element(list, ComplexNumber(real, imaginar), ComplexNumber(realNou, imaginarNou))
+            service.srv_modificare_element(list, ComplexNumber(real, imaginar), ComplexNumber(realNou, imaginarNou), history)
         except Exception as ex:
             print(ex)
             return
 
 def ui_afisare_lista(lista):
-    rez = ""
+    rez = "["
+    elem = False
     for number in lista:
-        rez += number.to_string() + " "
+        rez += number.to_string() + ","
+        elem = True
+    if elem: rez += "\b"
+    rez += "]"
     print(rez)
     
 def ui_afisare_lista_real(lista):
@@ -218,7 +223,7 @@ def ui_operatii_lista(list):
             print(ex)
             return
         print("Suma = " + suma.to_string())
-    if cmd == "produs":
+    elif cmd == "produs":
         try:
             stanga, dreapta = ui_citire_indici()
         except Exception as ex:
@@ -230,13 +235,25 @@ def ui_operatii_lista(list):
             print(ex)
             return
         print("Produsul = " + produs.to_string())  
-    if cmd == "sort_desc_im":
+    elif cmd == "sort_desc_im":
         try:
             sorted_list = service.srv_sortare_desc_img(list)
         except Exception as ex:
             print(ex)
             return
         ui_afisare_lista(sorted_list)
+    elif cmd == "diferenta":
+        try:
+            stanga, dreapta = ui_citire_indici()
+        except Exception as ex:
+            print(ex)
+            return
+        try:
+            dif = service.srv_calcul_numere_interval(list, stanga, dreapta, "diferenta")
+        except Exception as ex:
+            print(ex)
+            return
+        print("Diferenta = " + dif.to_string()) 
         
 
 def ui_filtrare_lista(list):
@@ -263,28 +280,36 @@ def ui_filtrare_lista(list):
             return
         ui_afisare_lista(rez)
 
-
+def ui_undo(list, history):
+    try:
+        service.srv_undo_list(list, history)
+        ui_afisare_lista(list)
+    except Exception as ex:
+        print(ex)
 
 def run():
     list = []
+    history = []
     while True:
         ui_optiuni_meniu_principal()
         cmd = input(">>>")
         if cmd == "adauga_numar":
             try:
-                ui_adauga_numar(list) #1. Adauga numar in lista
+                ui_adauga_numar(list, history) #1. Adauga numar in lista
             except Exception as ex:
                 print(ex)
-        if cmd == "modifica_lista":
-            ui_modifica_lista(list)
-        if cmd == "cautare_numere":     #3. Cautare numere
+        elif cmd == "modifica_lista":
+            ui_modifica_lista(list, history)
+        elif cmd == "cautare_numere":     #3. Cautare numere
             ui_cautare_numere(list)
-        if cmd == "operatii_lista":     #4. Operatii cu numere din lista
+        elif cmd == "operatii_lista":     #4. Operatii cu numere din lista
             ui_operatii_lista(list)
-        if cmd == "filtrare_lista":     #5. Filtrare lista
+        elif cmd == "filtrare_lista":     #5. Filtrare lista
             ui_filtrare_lista(list)
-        if cmd == "afisare_lista":
+        elif cmd == "afisare_lista":
             ui_afisare_lista(list)
+        elif cmd == "undo":
+            ui_undo(list, history)
         if cmd == "exit":
             return
         
