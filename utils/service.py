@@ -1,6 +1,17 @@
-from complex_number import ComplexNumber, diferenta, suma, produs
-from list_management import copy_list, calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img, stergere_element, stergere_interval
-from validation import validare_interval, validare_lista_semn
+from domain.complex_number import ComplexNumber, diferenta, suma, produs
+from domain.list_management import copy_list, calcul_numere_interval, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, proprietate_modul_egal_10, proprietate_modul_mai_mic_10, proprietate_parte_imaginara ,adauga_element, cautare_numere, sortare_desc_img, stergere_element, stergere_interval
+from domain.validation import validare_interval, validare_lista_semn
+
+def srv_creare_numar(real, imaginar):
+    '''
+        Functia primeste ca parametri partea reala si partea imaginara dintr-un numar complex
+        si returneaza numarul complex
+
+        input: real - numar real, parte reala
+               imaginar - numar real, parte imaginara
+        output: ComplexNumber(real, imaginar)
+    '''
+    return ComplexNumber(real, imaginar)
 
 def srv_adauga_numar(list, number, poz, history):
     '''

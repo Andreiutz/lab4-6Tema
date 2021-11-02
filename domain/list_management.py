@@ -1,5 +1,5 @@
-from complex_number import ComplexNumber, egale, suma, modul_numar_complex
-from validation import validare_indice, validare_interval, validare_prim
+from lab4Tema.domain.complex_number import modul_numar_complex, egale
+from lab4Tema.domain.validation import validare_indice, validare_interval, validare_prim
 
 def adauga_element(list, element, pozitie):
     '''
@@ -61,7 +61,7 @@ def cautare_numere(list, stanga, dreapta, proprietate):
     rezultat = []
     validare_interval(list, stanga, dreapta)
     for complex_num in list[stanga: dreapta+1]:
-        if (proprietate(complex_num)): rezultat.append(complex_num)
+        if proprietate(complex_num): rezultat.append(complex_num)
     return rezultat
 
 def calcul_numere_interval(list, stanga, dreapta, calcul):

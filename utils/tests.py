@@ -1,7 +1,7 @@
-from complex_number import ComplexNumber, diferenta,produs,suma, modul_numar_complex, egale
-from list_management import  calcul_numere_interval, copy_list, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, pozitii_element, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img, stergere_element, stergere_interval
-from validation import validare_indice, validare_lista_semn, validare_interval, validare_prim
-from service import srv_modificare_element, srv_stergere_interval, srv_stergere_element, srv_filtrare_modul, srv_filtrare_p_reala_prim, srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere, srv_undo_list
+from lab4-6Tema.domain.complex_number import ComplexNumber, diferenta,produs,suma, modul_numar_complex, egale
+from domain.list_management import  calcul_numere_interval, copy_list, filtrare_modul, filtrare_p_reala_prim, modificare_elemente, pozitii_element, proprietate_parte_imaginara, adauga_element, cautare_numere, proprietate_modul_mai_mic_10, proprietate_modul_egal_10, sortare_desc_img, stergere_element, stergere_interval
+from domain.validation import validare_indice, validare_lista_semn, validare_interval, validare_prim
+from utils.service import srv_modificare_element, srv_stergere_interval, srv_stergere_element, srv_filtrare_modul, srv_filtrare_p_reala_prim, srv_sortare_desc_img, srv_adauga_numar, srv_calcul_numere_interval, srv_cauta_numere, srv_undo_list
 
 
 def test_ComplexNumber():

@@ -1,5 +1,4 @@
-from complex_number import ComplexNumber
-import service
+from lab4Tema.utils import service
 
 
 def ui_optiuni_meniu_principal():
@@ -85,7 +84,7 @@ def ui_adauga_numar(list, history):
         print("Parte imaginara invalida\n")
         return
 
-    numar = ComplexNumber(real, imaginar)
+    numar = service.srv_creare_numar(real, imaginar)
     ui_optiuni_adauga()
     pozitie = input(">>>")
     if pozitie == "pozitie":
@@ -151,7 +150,7 @@ def ui_modifica_lista(list, history):
             print("Parte imaginara invalida\n")
             return
         try:
-            service.srv_modificare_element(list, ComplexNumber(real, imaginar), ComplexNumber(realNou, imaginarNou), history)
+            service.srv_modificare_element(list, service.srv_creare_numar(real, imaginar), service.srv_creare_numar(realNou, imaginarNou), history)
         except Exception as ex:
             print(ex)
             return
